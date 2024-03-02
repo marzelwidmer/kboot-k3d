@@ -1,0 +1,15 @@
+application:
+  config: "loaded from resources"
+
+spring:
+  application:
+    name: kboot-k3d-service
+
+  endpoints:
+    web:
+      exposure:
+        include: info,health
+
+logging:
+  level:
+    org.springframework.cloud.kubernetes: debug

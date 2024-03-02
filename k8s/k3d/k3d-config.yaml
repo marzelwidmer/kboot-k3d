@@ -1,0 +1,28 @@
+agents: 2
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+kubeAPI:
+  hostPort: "6550"
+metadata:
+  name: dev
+volumes: # repeatable flags are represented as YAML lists
+  - volume:  /tmp/kube:/kube # same as `--volume '/my/host/path:/path/in/node@server:0;agent:*'`
+options:
+  k3d:
+    disableImageVolume: false
+    disableLoadbalancer: false
+    disableRollback: false
+    loadbalancer: {}
+    wait: false
+  k3s: {}
+  kubeconfig: {}
+  runtime:
+    HostPidMode: false
+ports:
+  - nodeFilters:
+      - loadbalancer
+    port: 80:80
+registries: {}
+servers: 1
+
+

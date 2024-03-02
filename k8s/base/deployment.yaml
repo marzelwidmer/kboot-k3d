@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/search: "true"
+  labels:
+    app: app
+  name: app
+spec:
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - image: c3smonkey/template
+          name: kboot-k3d-service
+          ports:
+            - containerPort: 8080
+              name: 8080-tcp
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            periodSeconds: 3
+            timeoutSeconds: 5
+          readinessProbe:
+            periodSeconds: 10
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+          startupProbe:
+            periodSeconds: 5
+            failureThreshold: 36
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+      restartPolicy: Always

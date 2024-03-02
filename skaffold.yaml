@@ -1,0 +1,22 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: kboot-k3d-service
+build:
+  artifacts:
+    - image: kboot-k3d-service
+      jib:
+        args:
+          - -Pjib
+        fromImage: registry.access.redhat.com/ubi9/openjdk-17-runtime:latest
+        type: maven
+manifests:
+  kustomize:
+    paths:
+      - k8s/base
+profiles:
+  - name: k3d
+    manifests:
+      kustomize:
+        paths:
+          - k8s/installs/localDev

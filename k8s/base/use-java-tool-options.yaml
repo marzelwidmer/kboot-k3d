@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      containers:
+        - name: kboot-k3d-service
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-XX:MaxRAMPercentage=75 -XX:MaxMetaspaceSize=256m -Duser.timezone='Europe/Zurich'"
+            - name: MALLOC_ARENA_MAX
+              value: "2"
+
+
