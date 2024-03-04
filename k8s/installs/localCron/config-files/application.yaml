@@ -1,0 +1,4 @@
+spring:
+  devtools.add-properties: false
+application:
+  config: "loaded from ConfigMap"

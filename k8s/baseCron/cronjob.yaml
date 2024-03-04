@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: app
+  name: app
+spec:
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - image: c3smonkey/template
+            imagePullPolicy: IfNotPresent
+            name: kboot-k3d-service
+            volumeMounts:
+              - mountPath: /data
+                name: data-volume
+            resources:
+              requests:
+                cpu: 500m
+                memory: 500Mi
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+            env:
+              - name:  ENCRYPT_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: spring-encrypt
+                    key: key
+          restartPolicy: Never
+          volumes:
+            - name: data-volume
+              persistentVolumeClaim:
+                claimName: kboot-k3d-service
+  schedule: "*/1 * * * *"

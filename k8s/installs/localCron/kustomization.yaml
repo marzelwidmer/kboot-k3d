@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+images:
+  - name: c3smonkey/template
+    newName: kboot-k3d-service
+    newTag: latest
+
+namespace: default
+
+commonLabels:
+  app: kboot-k3d-service
+  appGroup: demo
+
+resources:
+- ../../baseCron
+# Patch Deployment
+patchesStrategicMerge:
+- patch-spring-profile.yaml
+# ConfigMap
+configMapGenerator:
+- files:
+  - config-files/application.yaml
+  name: kboot-k3d-service
+  options:
+    disableNameSuffixHash: true
