@@ -14,10 +14,8 @@ resources:
 - cronjob.yaml
 - pv-pvc-hostpath.yaml
 #- pvc-mydata-event-integration.yaml
+- use-configmap.yaml
 
-# ConfigMap
-#patchesStrategicMerge:
-#- use-java-tool-options.yaml
 
 ## Used for splunk forwarding
 #commonAnnotations:

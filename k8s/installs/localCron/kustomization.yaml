@@ -22,6 +22,6 @@ patchesStrategicMerge:
 configMapGenerator:
 - files:
   - config-files/application.yaml
-  name: kboot-k3d-service
+  name: kboot-k3d-service-config
   options:
     disableNameSuffixHash: true

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: kboot-k3d-service-config
+      containers:
+        - name: kboot-k3d-service
+          image: c3smonkey/template
+          volumeMounts:
+            - mountPath: /config
+              name: config
